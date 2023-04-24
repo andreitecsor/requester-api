@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "bb65f1c3-c498-402f-8eb0-3ff0fc408d09",
+		"name": "Dissertation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[R API] Check if user exists",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pid\":\"1223344556677\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/requester/api/v1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"requester",
+						"api",
+						"v1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[P API] Check if user is available",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/provider/api/v1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"provider",
+						"api",
+						"v1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
