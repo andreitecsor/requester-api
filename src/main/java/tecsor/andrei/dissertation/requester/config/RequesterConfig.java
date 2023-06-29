@@ -8,10 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import tecsor.andrei.dissertation.requester.service.ApiCaller;
 
 @Component
-public class Configuration {
+public class RequesterConfig {
     @Bean
     public ApiCaller apiCaller() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        // TODO: 29.06.2023 extend timeout 
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://localhost:8081")

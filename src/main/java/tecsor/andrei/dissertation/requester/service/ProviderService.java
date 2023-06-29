@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Response;
+import tecsor.andrei.dissertation.requester.dto.ResultDTO;
+import tecsor.andrei.dissertation.requester.dto.UserStatisticsDTO;
 import tecsor.andrei.dissertation.requester.model.Client;
 
 import java.io.IOException;
@@ -19,15 +21,6 @@ public class ProviderService {
         this.apiCaller = apiCaller;
     }
 
-    public boolean isClientAvailable(Client client) throws NoSuchAlgorithmException, IOException {
-        String hashedId = prepareHash(client.getPid());
-        System.out.println(hashedId);
-        Call<Boolean> callClientAvailability = apiCaller.isClientAvailable(hashedId);
-        Response<Boolean> response = callClientAvailability.execute();
-        return Boolean.TRUE.equals(response.body());
-
-    }
-
     @NotNull
     private static String prepareHash(String pid) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -40,5 +33,20 @@ public class ProviderService {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    public boolean isClientAvailable(Client client) throws NoSuchAlgorithmException, IOException {
+        String hashedId = prepareHash(client.getPid());
+        System.out.println(hashedId);
+        Call<Boolean> callClientAvailability = apiCaller.isClientAvailable(hashedId);
+        Response<Boolean> response = callClientAvailability.execute();
+        return Boolean.TRUE.equals(response.body());
+
+    }
+
+    public ResultDTO process(UserStatisticsDTO userStatisticsDTO) {
+        //todo: decode the userStatisticsDTO
+        //todo: send the data to the fhe processor
+        return null;
     }
 }
