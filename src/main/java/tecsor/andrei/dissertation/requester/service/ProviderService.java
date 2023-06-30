@@ -7,10 +7,14 @@ import retrofit2.Response;
 import tecsor.andrei.dissertation.requester.dto.ResultDTO;
 import tecsor.andrei.dissertation.requester.dto.UserStatisticsDTO;
 import tecsor.andrei.dissertation.requester.model.Client;
+import tecsor.andrei.dissertation.requester.model.EncryptedUserStatistics;
+import tecsor.andrei.dissertation.requester.tcp.client.TcpClient;
 
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import static tecsor.andrei.dissertation.requester.model.EncryptedUserStatistics.fromDto;
 
 @Service
 public class ProviderService {
@@ -45,8 +49,11 @@ public class ProviderService {
     }
 
     public ResultDTO process(UserStatisticsDTO userStatisticsDTO) {
-        //todo: decode the userStatisticsDTO
-        //todo: send the data to the fhe processor
-        return null;
+        EncryptedUserStatistics encryptedUserStatistics = fromDto(userStatisticsDTO);
+        try {
+            return TcpClient.process(encryptedUserStatistics);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

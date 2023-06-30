@@ -28,8 +28,7 @@ public class RequesterController {
 
     @PostMapping("/process")
     public ResultDTO process(@RequestBody UserStatisticsDTO userStatisticsDTO) {
-        ResultDTO resultDTO = providerService.process(userStatisticsDTO);
-        return resultDTO;
+        return providerService.process(userStatisticsDTO);
     }
 
 

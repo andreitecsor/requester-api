@@ -1,6 +1,9 @@
 package tecsor.andrei.dissertation.requester.model;
 
 import lombok.Data;
+import tecsor.andrei.dissertation.requester.dto.UserStatisticsDTO;
+
+import java.util.Base64;
 
 @Data
 public class EncryptedUserStatistics {
@@ -21,5 +24,18 @@ public class EncryptedUserStatistics {
         meanDepositSum = new byte[size];
         meanReportedIncome = new byte[size];
         noMonthsDeposited = new byte[size];
+    }
+
+    public static EncryptedUserStatistics fromDto(UserStatisticsDTO dto) {
+        EncryptedUserStatistics encrypted = new EncryptedUserStatistics(dto.getSize());
+
+        encrypted.setGamblingPercent(Base64.getDecoder().decode(dto.getGamblingPercent()));
+        encrypted.setOverspendingScore(Base64.getDecoder().decode(dto.getOverspendingScore()));
+        encrypted.setImpulsiveBuyingScore(Base64.getDecoder().decode(dto.getImpulsiveBuyingScore()));
+        encrypted.setMeanDepositSum(Base64.getDecoder().decode(dto.getMeanDepositSum()));
+        encrypted.setMeanReportedIncome(Base64.getDecoder().decode(dto.getMeanReportedIncome()));
+        encrypted.setNoMonthsDeposited(Base64.getDecoder().decode(dto.getNoMonthsDeposited()));
+
+        return encrypted;
     }
 }

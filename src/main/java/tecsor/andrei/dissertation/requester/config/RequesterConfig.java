@@ -11,7 +11,10 @@ import tecsor.andrei.dissertation.requester.service.ApiCaller;
 public class RequesterConfig {
     @Bean
     public ApiCaller apiCaller() {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(450, java.util.concurrent.TimeUnit.SECONDS)
+                .writeTimeout(450, java.util.concurrent.TimeUnit.SECONDS)
+                .build();
         // TODO: 29.06.2023 extend timeout 
 
         Retrofit retrofit = new Retrofit.Builder()
