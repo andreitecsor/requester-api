@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Response;
 import tecsor.andrei.dissertation.requester.dto.ResultDTO;
+import tecsor.andrei.dissertation.requester.dto.RiskDTO;
 import tecsor.andrei.dissertation.requester.dto.UserStatisticsDTO;
 import tecsor.andrei.dissertation.requester.model.Client;
 import tecsor.andrei.dissertation.requester.model.EncryptedUserStatistics;
+import tecsor.andrei.dissertation.requester.model.Risk;
 import tecsor.andrei.dissertation.requester.tcp.client.TcpClient;
 
 import java.io.IOException;
@@ -18,8 +20,8 @@ import static tecsor.andrei.dissertation.requester.model.EncryptedUserStatistics
 
 @Service
 public class ProviderService {
-
     private final ApiCaller apiCaller;
+    private Risk risk = null;
 
     public ProviderService(ApiCaller apiCaller) {
         this.apiCaller = apiCaller;
@@ -55,5 +57,16 @@ public class ProviderService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void provide(Risk risk) {
+        this.risk = risk;
+    }
+
+    public RiskDTO getResult(String pid) {
+        if (risk == null) {
+            return new RiskDTO(-1, "processing");
+        }
+        return new RiskDTO(risk.getScore(), "done");
     }
 }

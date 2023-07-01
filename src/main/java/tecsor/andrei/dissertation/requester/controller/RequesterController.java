@@ -1,12 +1,12 @@
 package tecsor.andrei.dissertation.requester.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import tecsor.andrei.dissertation.requester.dto.ResultDTO;
+import tecsor.andrei.dissertation.requester.dto.RiskDTO;
 import tecsor.andrei.dissertation.requester.dto.UserStatisticsDTO;
 import tecsor.andrei.dissertation.requester.model.Client;
+import tecsor.andrei.dissertation.requester.model.Risk;
 import tecsor.andrei.dissertation.requester.service.ProviderService;
 
 import java.io.IOException;
@@ -31,5 +31,15 @@ public class RequesterController {
         return providerService.process(userStatisticsDTO);
     }
 
+    @PostMapping("/provide")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void provide(@RequestBody Risk risk) {
+        providerService.provide(risk);
+    }
+
+    @GetMapping("/{pid}")
+    public RiskDTO getResult(@PathVariable("pid") String pid) {
+        return providerService.getResult(pid);
+    }
 
 }
