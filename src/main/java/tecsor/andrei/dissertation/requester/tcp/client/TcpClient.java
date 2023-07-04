@@ -30,6 +30,8 @@ public class TcpClient {
             out.write(encryptedUserStatistics.getMeanReportedIncome());
             out.write(encryptedUserStatistics.getNoMonthsDeposited());
 
+            System.out.println("Waiting for the FHE computation to finish...");
+
             // receive a response from the server
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             byte[] sizeBytes = new byte[8];
@@ -42,6 +44,7 @@ public class TcpClient {
             byte[] encryptedResult = new byte[(int) size];
             dataInputStream.readFully(encryptedResult);
             dto.setResult(Base64.getEncoder().encodeToString(encryptedResult));
+            System.out.println("Sending the encrypted result back to the provider");
             return dto;
 
         }

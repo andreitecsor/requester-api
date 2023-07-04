@@ -1,4 +1,4 @@
-package tecsor.andrei.dissertation.requester.model;
+package tecsor.andrei.dissertation.requester.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Risk {
+public class ClientRequestDTO {
     private String pid;
     private String fid;
-    private int score;
 }
