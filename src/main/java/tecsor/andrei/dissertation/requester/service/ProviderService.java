@@ -22,10 +22,11 @@ import static tecsor.andrei.dissertation.requester.model.EncryptedUserStatistics
 
 @Service
 public class ProviderService {
+    public static final String ANSI_YELLOW = "\u001B[93m";
+
     private final ApiCaller apiCaller;
 
     private final Map<String, Risk> clientRiskMap = new HashMap<>();
-    private Risk risk = null;
 
     public ProviderService(ApiCaller apiCaller) {
         this.apiCaller = apiCaller;
@@ -47,20 +48,22 @@ public class ProviderService {
 
     public boolean isClientAvailable(ClientRequestDTO clientRequest) throws NoSuchAlgorithmException, IOException {
         String hashedId = prepareHash(clientRequest.getPid());
-        System.out.println("The hashed value for client id " + clientRequest.getPid() + " is " + hashedId);
+        System.out.println(ANSI_YELLOW + "The hashed value for client id " + clientRequest.getPid() + " is " + hashedId);
         if (clientRequest.getFid().equals("p1")) {
             System.out.println("Checking if client is available for provider 1");
             Call<Boolean> callClientAvailability = apiCaller.isClientAvailable(hashedId);
             Response<Boolean> response = callClientAvailability.execute();
             System.out.println("Client availability for provider 1 is " + response.body());
+            System.out.println();
             return Boolean.TRUE.equals(response.body());
         }
         System.out.println("The provider is not present in the schema");
+        System.out.println();
         return false;
     }
 
     public ResultDTO process(UserStatisticsDTO userStatisticsDTO) {
-        System.out.println("Transforming the user statistics dto to the encrypted version");
+        System.out.println("\nTransforming the user statistics dto to the encrypted version");
         EncryptedUserStatistics encryptedUserStatistics = fromDto(userStatisticsDTO);
         try {
             return TcpClient.process(encryptedUserStatistics);
@@ -70,8 +73,7 @@ public class ProviderService {
     }
 
     public void provide(Risk risk) {
-        System.out.println("User with pid " + risk.getPid() + " has a risk score of " + risk.getScore() + " from provider " + risk.getFid());
-        this.risk = risk;
+        System.out.println("\nUser with pid " + risk.getPid() + " has a risk score of " + risk.getScore() + " from provider " + risk.getFid());
         clientRiskMap.put(risk.getPid(), risk);
     }
 
