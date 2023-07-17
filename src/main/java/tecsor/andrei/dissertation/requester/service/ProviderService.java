@@ -75,6 +75,7 @@ public class ProviderService {
     public void provide(Risk risk) {
         System.out.println("\nUser with pid " + risk.getPid() + " has a risk score of " + risk.getScore() + " from provider " + risk.getFid());
         clientRiskMap.put(risk.getPid(), risk);
+        System.out.println("DONE!");
     }
 
     public RiskDTO getResult(String fid, String pid) throws NoSuchAlgorithmException {
